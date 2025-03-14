@@ -9,6 +9,14 @@ lazy val root = project
   .settings(
     sbtPlugin := true,
 
+    crossScalaVersions += "3.6.4",
+    pluginCrossBuild / sbtVersion := {
+      scalaBinaryVersion.value match {
+        case "2.12" => "1.10.7"
+        case _      => "2.0.0-M4"
+      }
+    },
+
     libraryDependencies += {
       val currentSbtVersion = (pluginCrossBuild/sbtBinaryVersion).value
       Defaults.sbtPluginExtra("com.github.sbt" % "sbt-git" % "2.1.0", currentSbtVersion, scalaBinaryVersion.value)
